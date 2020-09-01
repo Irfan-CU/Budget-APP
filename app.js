@@ -1,5 +1,27 @@
 var budgetController = (function() {
 
+    var Expense = function(id, description, value) {
+        this.id = id;
+        this.description = this.description
+        this.value = value;
+    }
+    var Income = function(id, description, value) {
+        this.id = id;
+        this.description = this.description
+        this.value = value;
+    }
+
+    var data = {
+        allItems: {
+            exp: [],
+            inc: []
+        },
+        total: {
+            exp = 0,
+            inc = 0
+        }
+    }
+
 })();
 
 
@@ -20,7 +42,7 @@ var UIcontroller = (function() {
                 value: document.querySelector(DOMstrings.inputValue).value
             };
         },
-        getDOMStrings = function() {
+        getDOMStrings: function() {
             return DOMstrings;
 
         }
@@ -30,25 +52,36 @@ var UIcontroller = (function() {
 
 var controller = (function(budgetCtrl, UICtrl) {
 
-    var DOM = UIctrl.getDOMStrings();
+    var setUpEventListner = function() {
+        document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
+        document.addEventListener('keypress', function(e) {
+            if (e.code === 'Enter' || e.which === 13 || e.keyCode === 13) {
+                ctrlAddItem();
+            }
+        });
+    }
+
+
+    var DOM = UICtrl.getDOMStrings();
 
 
     var ctrlAddItem = function() {
         var dataObject = UICtrl.getInput();
-        console.log(dataObject);
+
     }
 
 
+    return {
+        init: function() {
 
-    document.querySelector(DOM.inputButton).addEventListener('click', function() {
-        ctrlAddItem();
-
-    })
-    document.addEventListener('keypress', function(e) {
-        if (e.code === 'Enter' || e.which === 13 || e.keyCode === 13) {
-
+            setUpEventListner();
         }
-    })
+    };
+
 
 
 })(budgetController, UIcontroller);
+
+
+
+controller.init();
