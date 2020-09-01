@@ -2,12 +2,12 @@ var budgetController = (function() {
 
     var Expense = function(id, description, value) {
         this.id = id;
-        this.description = this.description
+        this.description = description;
         this.value = value;
     }
     var Income = function(id, description, value) {
         this.id = id;
-        this.description = this.description
+        this.description = description;
         this.value = value;
     }
 
@@ -17,10 +17,26 @@ var budgetController = (function() {
             inc: []
         },
         total: {
-            exp = 0,
-            inc = 0
+            exp: 0,
+            inc: 0
         }
     }
+
+    return {
+        addItem: function(type, des, val) {
+            var newItem, TD;
+            if (type === 'exp') {
+                newItem = new Expense(type, des, val);
+
+            } else if (type === 'inc') {
+                newItem = new Income(type, des, val);
+            }
+            data.allItems[type].push(newItem);
+            return newItem;
+            //console.log(data.allItems[type]);
+
+        }
+    };
 
 })();
 
@@ -67,6 +83,8 @@ var controller = (function(budgetCtrl, UICtrl) {
 
     var ctrlAddItem = function() {
         var dataObject = UICtrl.getInput();
+        console.log(dataObject.description);
+        budgetCtrl.newds(dataObject.type, dataObject.description, dataObject.value);
 
     }
 
